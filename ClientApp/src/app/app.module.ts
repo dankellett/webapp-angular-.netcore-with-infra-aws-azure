@@ -33,10 +33,10 @@ import { ChartComponent } from './chart/chart.component';
     ApiAuthorizationModule,
     ChartsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, canActivate: [AuthorizeGuard]},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-      { path: 'chart', component: ChartComponent },
+      { path: 'chart', component: ChartComponent, canActivate: [AuthorizeGuard]  },
     ])
   ],
   providers: [
