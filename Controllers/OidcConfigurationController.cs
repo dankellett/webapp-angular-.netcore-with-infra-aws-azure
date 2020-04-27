@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace hr_proto_vs.Controllers
+namespace app_template.Controllers
 {
     public class OidcConfigurationController : Controller
     {

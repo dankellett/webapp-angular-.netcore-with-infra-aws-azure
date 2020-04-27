@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using hr_proto_vs.Data;
-using hr_proto_vs.Models;
+using app_template.Data;
+using app_template.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 
-namespace hr_proto_vs
+namespace app_template
 {
     public class Startup
     {

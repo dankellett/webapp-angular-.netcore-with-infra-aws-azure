@@ -1,6 +1,6 @@
 using System;
 
-namespace hr_proto_vs
+namespace app_template
 {
     public class WeatherForecast
     {

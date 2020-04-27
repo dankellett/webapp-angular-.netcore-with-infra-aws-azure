@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace hr_proto_vs.Controllers
+namespace app_template.Controllers
 {
     [Authorize]
     [ApiController]

@@ -1,4 +1,4 @@
-export const ApplicationName = 'hr_proto_vs';
+export const ApplicationName = 'app_template';
 
 export const ReturnUrlType = 'returnUrl';
 
