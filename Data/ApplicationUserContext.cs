@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace app_template.Data
 {
-    public class IdenityUserContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationUserContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public IdenityUserContext(
+        public ApplicationUserContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {

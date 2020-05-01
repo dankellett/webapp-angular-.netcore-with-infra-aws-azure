@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label, BaseChartDirective } from 'ng2-charts';
 
@@ -8,6 +9,20 @@ import { Label, BaseChartDirective } from 'ng2-charts';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
+
+  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+
+  private http: HttpClient;
+  private baseUrl: string;
+
+  constructor(_http: HttpClient, @Inject('BASE_URL') _baseUrl: string) {
+    this.http = _http;
+    this.baseUrl = _baseUrl;
+  }
+
+  ngOnInit() {
+    this.getPoint();
+  }
 
   // scatter
   public scatterChartOptions: ChartOptions = {
@@ -67,13 +82,6 @@ export class ChartComponent implements OnInit {
   ];
   public scatterChartType: ChartType = 'scatter';
 
-  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     
@@ -100,7 +108,13 @@ export class ChartComponent implements OnInit {
         newX = Math.abs((event.offsetX - xTop) / (xBottom - xTop));
         newX = newX * (Math.abs(xMax - xMin)) + xMin;
     };
-    var newPoint: Chart.ChartPoint[] = [{ x: newX, y: newY }];
+
+    this.updatePointOnChart(newX, newY);
+    this.savePoint(newX, newY);
+  }
+
+  private updatePointOnChart(x:number, y:number){
+    var newPoint: Chart.ChartPoint[] = [{ x: x, y: y }];
 
     this.scatterChartData = [
       {
@@ -111,7 +125,25 @@ export class ChartComponent implements OnInit {
     ];
 
     this.chart.update();
-    
   }
 
+  private savePoint(x:number, y:number) : void {
+    let alignmentEntryDto: AlignmentEntryDto = {x: x, y: y};
+    let body = alignmentEntryDto;
+    const headerOptions = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+
+    this.http.post(this.baseUrl + 'alignmententry', body, { headers: headerOptions }).subscribe(result => {
+    }, error => console.error(error));
+  }
+
+  private getPoint(){
+    this.http.get<AlignmentEntryDto>(this.baseUrl + 'alignmententry').subscribe(result => {
+      this.updatePointOnChart(result.x, result.y);
+    }, error => console.error(error));
+  }
+}
+
+class AlignmentEntryDto {
+  x: number;
+  y: number;
 }

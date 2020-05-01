@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace app_template.Data.Migrations
 {
-    [DbContext(typeof(IdenityUserContext))]
+    [DbContext(typeof(ApplicationUserContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

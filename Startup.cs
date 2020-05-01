@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using hr_proto_vs.Data;
 
 namespace app_template
 {
@@ -30,21 +31,25 @@ namespace app_template
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdenityUserContext>(options =>
+            services.AddDbContext<ApplicationUserContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<IdenityUserContext>();
+                .AddEntityFrameworkStores<ApplicationUserContext>();
 
             services.AddIdentityServer()
                 .AddSigningCredential(GetAuthCert(HostingEnvironment))
-                .AddApiAuthorization<ApplicationUser, IdenityUserContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationUserContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddRazorPages().AddNewtonsoftJson();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
