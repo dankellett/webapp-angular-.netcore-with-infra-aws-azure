@@ -120,8 +120,7 @@ namespace app_template
                 certStore.Open(OpenFlags.ReadOnly);
                 X509Certificate2Collection certCollection = certStore.Certificates.Find(
                     X509FindType.FindByThumbprint,
-                    // Replace below with your cert's thumbprint
-                    "5F5B30EE4917330E7D98A1B01E5060C8317AA5C5",
+                    Configuration.GetValue<string>("auth_cert_thumbprint"),
                     false);
                 // Get the first cert with the thumbprint
                 if (certCollection.Count > 0)
@@ -134,8 +133,7 @@ namespace app_template
             // Fallback to local file for development
             if (cert == null)
             {
-                cert = new X509Certificate2(Path.Combine(env.ContentRootPath, "auth_key_dev.pfx"), "sanD1ego");
-                //_startupLogger?.Log($"Falling back to auth cert from file. Successfully loaded: {cert.Thumbprint}");
+                cert = new X509Certificate2(Path.Combine(env.ContentRootPath, "auth_key_dev.pfx"), Configuration.GetValue<string>("auth_cert_password"));
             }
 
             return cert;
