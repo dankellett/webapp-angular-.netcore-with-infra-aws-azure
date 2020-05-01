@@ -24,13 +24,17 @@ namespace hr_proto_vs.Data
 
             modelBuilder.Entity<AlignmentEntry>()
                 .HasIndex(a => a.UserId);
+
+            modelBuilder.Entity<UserOrgReport>()
+                .HasIndex(u => new { u.UserId, u.ReportsToUserId })
+                .IsUnique();
         }
         #endregion
     }
 
     public class AlignmentEntry
     {
-        public int AlignmentEntryID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string UserId { get; set; }
         public int AlignmentType { get; set; }
@@ -38,5 +42,12 @@ namespace hr_proto_vs.Data
         public float Y { get; set; }
         [Timestamp]
         public byte[] Timestamp { get; set; }
+    }
+
+    public class UserOrgReport
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ReportsToUserId { get; set; }
     }
 }

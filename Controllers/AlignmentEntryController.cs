@@ -32,7 +32,7 @@ namespace hr_proto_vs.Controllers
         [HttpGet()]
         public async Task<ActionResult<AlignmentEntry>> GetAlignmentEntry()
         {
-            var alignmentEntry = await _context.Alignment.Where(a => a.UserId == this._userId).OrderByDescending(b=>b.AlignmentEntryID).FirstAsync();
+            var alignmentEntry = await _context.Alignment.Where(a => a.UserId == this._userId).OrderByDescending(b=>b.Id).FirstAsync();
 
             if (alignmentEntry == null)
             {
@@ -48,7 +48,7 @@ namespace hr_proto_vs.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlignmentEntry(int id, AlignmentEntry alignmentEntry)
         {
-            if (id != alignmentEntry.AlignmentEntryID)
+            if (id != alignmentEntry.Id)
             {
                 return BadRequest();
             }
@@ -91,12 +91,12 @@ namespace hr_proto_vs.Controllers
             _context.Alignment.Add(alignmentEntry);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAlignmentEntry", new { id = alignmentEntry.AlignmentEntryID }, alignmentEntry);
+            return CreatedAtAction("GetAlignmentEntry", new { id = alignmentEntry.Id }, alignmentEntry);
         }
 
         private bool AlignmentEntryExists(int id)
         {
-            return _context.Alignment.Any(e => e.AlignmentEntryID == id);
+            return _context.Alignment.Any(e => e.Id == id);
         }
 
         public class AlignmentEntryDto

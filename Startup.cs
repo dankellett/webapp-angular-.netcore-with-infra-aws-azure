@@ -101,7 +101,11 @@ namespace app_template
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //Use this to only load the server, client app is run via external npm start
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+
+                    //Use this to load client and server together
+                    //spa.UseAngularCliServer(npmScript: "start");
                 }
             });
         }
