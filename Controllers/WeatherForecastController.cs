@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace app_template.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Constants.Roles.GlobalAdmin)]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

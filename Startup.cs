@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using app_template.Data;
+using System.Security.Claims;
+using Microsoft.Extensions.Options;
 
 namespace app_template
 {
@@ -31,28 +33,39 @@ namespace app_template
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Add separate user context - this can be moved to an discrete auth server later
             services.AddDbContext<ApplicationUserContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            //Add the application's database context
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationUserContext>();
-                
+            //Add .NET Core Identity framework
+            services.AddIdentity<ApplicationUser, ApplicationRole>(config => {
+                    config.SignIn.RequireConfirmedAccount = true;
+                })
+                .AddRoleManager<RoleManager<ApplicationRole>>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationUserContext>(); ;
 
+            //Add IdentityServer4 authentication framework
             services.AddIdentityServer()
                 .AddSigningCredential(GetAuthCert(HostingEnvironment))
                 .AddApiAuthorization<ApplicationUser, ApplicationUserContext>();
 
+            //Add auth with IS4 Jwt config
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            //Add MVC and razor pages - this could be reduced if auth is moved out of this app
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddRazorPages().AddNewtonsoftJson();
-            // In production, the Angular files will be served from this directory
+
+            //In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";

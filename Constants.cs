@@ -9,20 +9,20 @@ namespace app_template
     {
         public static class Roles
         {
-            public static string GlobalAdmin = "global_admin";
-            public static string GlobalAdminDescription = "Application administrator across all accounts";
+            public const string GlobalAdmin = "global_admin";
+            public const string GlobalAdminDescription = "Application administrator across all accounts";
 
-            public static string AccountAdmin = "account_admin";
-            public static string AccountAdminDescription = "Account admin for specific account(s) only";
+            public const string AccountAdmin = "account_admin";
+            public const string AccountAdminDescription = "Account admin for specific account(s) only";
 
-            public static string ReportViewer = "report_viewer";
-            public static string ReportViewerDescription = "User can access reporting data";
+            public const string ReportViewer = "report_viewer";
+            public const string ReportViewerDescription = "User can access reporting data";
 
-            public static string Manager = "manager";
-            public static string ManagerDescription = "User is a manager of an employee";
+            public const string Manager = "manager";
+            public const string ManagerDescription = "User is a manager of an employee";
 
-            public static string Employee = "employee";
-            public static string EmployeeDescription = "User is an employee in an account";
+            public const string Employee = "employee";
+            public const string EmployeeDescription = "User is an employee in an account";
         }
     }
 }

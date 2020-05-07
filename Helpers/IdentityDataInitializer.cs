@@ -1,5 +1,6 @@
 ﻿using app_template.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,19 @@ namespace app_template
     {
         public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
         {
-            SeedUsers(userManager, configuration);
             SeedRoles(roleManager, configuration);
+            SeedUsers(userManager, configuration);
         }
 
         public static void SeedUsers(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
-            EnsureUser(userManager, 
-                configuration.GetValue<string>("ga_username"), 
-                configuration.GetValue<string>("ga_pw"), 
-                Constants.Roles.GlobalAdmin);
+            var gaUsername = configuration.GetValue<string>("ga_username");
+            if (!String.IsNullOrEmpty(gaUsername)){
+                EnsureUser(userManager,
+                    gaUsername,
+                    configuration.GetValue<string>("ga_pw"),
+                    Constants.Roles.GlobalAdmin);
+            }
         }
 
         public static void SeedRoles(RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
