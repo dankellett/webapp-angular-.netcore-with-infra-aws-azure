@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
-using hr_proto_vs.Data;
+using app_template.Data;
 
 namespace app_template
 {
@@ -40,7 +40,9 @@ namespace app_template
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationUserContext>();
+                
 
             services.AddIdentityServer()
                 .AddSigningCredential(GetAuthCert(HostingEnvironment))
@@ -55,10 +57,14 @@ namespace app_template
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+                                IWebHostEnvironment env,
+                                UserManager<ApplicationUser> userManager,
+                                RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
             {

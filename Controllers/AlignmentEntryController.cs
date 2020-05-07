@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using hr_proto_vs.Data;
+using app_template.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
-namespace hr_proto_vs.Controllers
+namespace app_template.Controllers
 {
     [Route("[controller]")]
     [ApiController]

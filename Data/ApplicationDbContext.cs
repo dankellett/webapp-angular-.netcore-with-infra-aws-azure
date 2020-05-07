@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace hr_proto_vs.Data
+namespace app_template.Data
 {
     public class ApplicationDbContext : DbContext
     {

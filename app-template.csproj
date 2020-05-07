@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,7 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <RootNamespace>hr_proto_vs</RootNamespace>
+    <RootNamespace>app_template</RootNamespace>
     <UserSecretsId>c7ee8c11-b204-450b-899a-6ad7ad4df2b9</UserSecretsId>
   </PropertyGroup>
 

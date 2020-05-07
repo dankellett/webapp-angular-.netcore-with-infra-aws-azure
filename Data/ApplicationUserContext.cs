@@ -1,6 +1,6 @@
 ﻿using app_template.Models;
 using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+//using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace app_template.Data
 {
-    public class ApplicationUserContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationUserContext : ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationUserContext(
             DbContextOptions options,

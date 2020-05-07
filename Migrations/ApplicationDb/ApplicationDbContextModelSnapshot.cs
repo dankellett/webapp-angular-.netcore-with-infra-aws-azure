@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using hr_proto_vs.Data;
+using app_template.Data;
 
-namespace hr_proto_vs.Migrations
+namespace app_template.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200501184657_AlignmentEntryEntity")]
-    partial class AlignmentEntryEntity
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +19,7 @@ namespace hr_proto_vs.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("hr_proto_vs.Data.AlignmentEntry", b =>
+            modelBuilder.Entity("app_template.Data.AlignmentEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +51,7 @@ namespace hr_proto_vs.Migrations
                     b.ToTable("Alignment");
                 });
 
-            modelBuilder.Entity("hr_proto_vs.Data.UserOrgReport", b =>
+            modelBuilder.Entity("app_template.Data.UserOrgReport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
