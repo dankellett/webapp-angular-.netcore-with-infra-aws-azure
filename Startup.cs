@@ -90,6 +90,9 @@ namespace app_template
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            IdentityDataInitializer.SeedData(userManager, roleManager, Configuration);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
