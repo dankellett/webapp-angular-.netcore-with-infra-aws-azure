@@ -19,19 +19,17 @@ namespace app_template.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
-        private readonly ApplicationUserContext _userDbContext;
+        private readonly AppDbContext _dbContext;
         private string _userId;
         private readonly ClaimsPrincipal _claimedUser;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(ApplicationDbContext dbContext,
-            ApplicationUserContext userDbContext,
+        public UserController(
+            AppDbContext dbContext,
             IHttpContextAccessor contextAccessor,
             UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
-            _userDbContext = userDbContext;
             _claimedUser = contextAccessor.HttpContext.User;
             _userManager = userManager;
             _userId = userManager.GetUserId(_claimedUser);

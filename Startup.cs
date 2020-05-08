@@ -31,12 +31,7 @@ namespace app_template
         public void ConfigureServices(IServiceCollection services)
         {
             //Add separate user context - this can be moved to an discrete auth server later
-            services.AddDbContext<ApplicationUserContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
-            //Add the application's database context
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -47,12 +42,12 @@ namespace app_template
                 .AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<ApplicationUserContext>(); ;
+                .AddEntityFrameworkStores<AppDbContext>(); ;
 
             //Add IdentityServer4 authentication framework
             services.AddIdentityServer()
                 .AddSigningCredential(GetAuthCert(HostingEnvironment))
-                .AddApiAuthorization<ApplicationUser, ApplicationUserContext>();
+                .AddApiAuthorization<ApplicationUser, AppDbContext>();
 
             //Add auth with IS4 Jwt config
             services.AddAuthentication()

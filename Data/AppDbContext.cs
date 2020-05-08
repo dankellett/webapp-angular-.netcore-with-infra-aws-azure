@@ -6,20 +6,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace app_template.Data
 {
-    public class ApplicationUserContext: ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
+    public class AppDbContext: ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
         ApplicationUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
         // : ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string>
     {
-        public ApplicationUserContext(
+        public AppDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
-        {
-        }
+        { }
+
+        public DbSet<AlignmentEntry> Alignment { get; set; }
+        public DbSet<UserOrgReport> UserOrgReport { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +44,32 @@ namespace app_template.Data
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+
+            builder.Entity<AlignmentEntry>()
+                .HasIndex(a => a.UserId);
+
+            builder.Entity<UserOrgReport>()
+                .HasIndex(u => new { u.UserId, u.ReportsToUserId })
+                .IsUnique();
         }
+    }
+
+    public class AlignmentEntry
+    {
+        public int Id { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public int AlignmentType { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        [Timestamp]
+        public byte[] Timestamp { get; set; }
+    }
+
+    public class UserOrgReport
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ReportsToUserId { get; set; }
     }
 }

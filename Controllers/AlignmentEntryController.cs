@@ -19,12 +19,12 @@ namespace app_template.Controllers
     [Authorize]
     public class AlignmentEntryController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
         private string _userId;
         private readonly ClaimsPrincipal _claimedUser;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AlignmentEntryController(ApplicationDbContext context, IHttpContextAccessor contextAccessor,
+        public AlignmentEntryController(AppDbContext context, IHttpContextAccessor contextAccessor,
             UserManager<ApplicationUser> userManager)
         {
             _context = context;
