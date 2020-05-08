@@ -26,6 +26,7 @@ namespace app_template.Controllers
         }
 
         [HttpGet]
+        [Route("/api/weatherforecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

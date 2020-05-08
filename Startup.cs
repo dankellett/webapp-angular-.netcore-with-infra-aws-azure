@@ -13,9 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
-using app_template.Data;
-using System.Security.Claims;
-using Microsoft.Extensions.Options;
 
 namespace app_template
 {
@@ -104,6 +101,8 @@ namespace app_template
             app.UseIdentityServer();
             app.UseAuthorization();
 
+            //Seed the user database with roles and users.
+            //Seeding other data should be done in the dbcontext.
             IdentityDataInitializer.SeedData(userManager, roleManager, Configuration);
 
             app.UseEndpoints(endpoints =>

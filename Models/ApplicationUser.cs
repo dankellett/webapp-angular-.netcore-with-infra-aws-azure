@@ -8,5 +8,6 @@ namespace app_template.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

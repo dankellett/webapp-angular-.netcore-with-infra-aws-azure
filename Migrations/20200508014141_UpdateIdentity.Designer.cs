@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app_template.Data;
 
 namespace app_template.Migrations
 {
     [DbContext(typeof(ApplicationUserContext))]
-    partial class ApplicationUserContextModelSnapshot : ModelSnapshot
+    [Migration("20200508014141_UpdateIdentity")]
+    partial class UpdateIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,6 +197,12 @@ namespace app_template.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationRoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -211,6 +219,10 @@ namespace app_template.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationRoleId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -293,9 +305,19 @@ namespace app_template.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("RoleId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -336,19 +358,38 @@ namespace app_template.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("app_template.Models.ApplicationRole", b =>
+                {
+                    b.HasOne("app_template.Models.ApplicationRole", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("ApplicationRoleId");
+
+                    b.HasOne("app_template.Models.ApplicationUser", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("app_template.Models.ApplicationUserRole", b =>
                 {
-                    b.HasOne("app_template.Models.ApplicationRole", "Role")
-                        .WithMany("UserRoles")
+                    b.HasOne("app_template.Models.ApplicationRole", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("app_template.Models.ApplicationUser", "User")
-                        .WithMany("UserRoles")
+                    b.HasOne("app_template.Models.ApplicationRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("app_template.Models.ApplicationUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("app_template.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

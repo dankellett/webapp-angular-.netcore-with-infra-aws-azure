@@ -35,6 +35,7 @@ namespace app_template.Controllers
 
         // GET: api/AlignmentEntry
         [HttpGet()]
+        [Route("/api/alignmententry")]
         public async Task<ActionResult<AlignmentEntry>> GetAlignmentEntry()
         {
             //Example of testing for user role inside action, this can also be done via the Auth attribute.
@@ -55,6 +56,7 @@ namespace app_template.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Route("/api/alignmententry")]
         public async Task<IActionResult> PutAlignmentEntry(int id, AlignmentEntry alignmentEntry)
         {
             if (id != alignmentEntry.Id)
@@ -87,6 +89,7 @@ namespace app_template.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Route("/api/alignmententry")]
         public async Task<ActionResult<AlignmentEntry>> PostAlignmentEntry([FromBody] AlignmentEntryDto alignmentEntryDto)
         {
             var alignmentEntry = new AlignmentEntry()

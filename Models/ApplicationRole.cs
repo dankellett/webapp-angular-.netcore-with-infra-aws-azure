@@ -9,5 +9,6 @@ namespace app_template.Models
     public class ApplicationRole : IdentityRole
     {
         public string Description { get; set; }
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }
