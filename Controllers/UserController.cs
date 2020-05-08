@@ -52,12 +52,6 @@ namespace app_template.Controllers
                 });
             }
 
-            //var userList = await _userDbContext.Users.Select(async u => new ApplicationUserDto
-            //{
-            //    UserName = u.UserName,
-            //    Roles = u.roles (await _userManager.GetRolesAsync(u)).ToList()
-            //}).ToListAsync();
-
             return userDtoList;
         }
 

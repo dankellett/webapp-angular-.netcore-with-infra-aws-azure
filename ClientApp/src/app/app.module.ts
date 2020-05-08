@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from 'src/app/core/core.module'
 import { SharedModule } from 'src/app/shared/shared.module'
@@ -26,7 +27,9 @@ import { UsersComponent } from './pages/users/users.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    NgbModule,
     FormsModule,
+    NgSelectModule,
     CoreModule,
     SharedModule,
     PagesModule,

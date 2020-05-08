@@ -24,7 +24,9 @@ namespace app_template.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            
+            //Setup many-many FK relationships to support property mapping from Users to Roles
+            //This functionality existed out of the box in previous versions of ASP.NET Core Identity
             builder.Entity<ApplicationUserRole>(userRole =>
             {
                 userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
