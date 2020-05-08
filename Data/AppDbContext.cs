@@ -14,7 +14,6 @@ namespace app_template.Data
 {
     public class AppDbContext: ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
         ApplicationUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
-        // : ApiAuthorizationDbContext<ApplicationUser, ApplicationRole, string>
     {
         public AppDbContext(
             DbContextOptions options,
@@ -52,24 +51,5 @@ namespace app_template.Data
                 .HasIndex(u => new { u.UserId, u.ReportsToUserId })
                 .IsUnique();
         }
-    }
-
-    public class AlignmentEntry
-    {
-        public int Id { get; set; }
-        [Required]
-        public string UserId { get; set; }
-        public int AlignmentType { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
-    }
-
-    public class UserOrgReport
-    {
-        public int Id { get; set; }
-        public string UserId { get; set; }
-        public string ReportsToUserId { get; set; }
     }
 }
