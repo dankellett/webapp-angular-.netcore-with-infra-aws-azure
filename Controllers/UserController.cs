@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using app_template.Data;
 using app_template.Models;
@@ -48,17 +49,43 @@ namespace app_template.Controllers
                 {
                     Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
                     UserName = user.UserName,
-                    Manager = "test"
+                    ManagerId = "test"
                 });
             }
 
             return userDtoList;
         }
 
+        [HttpPost()]
+        [Route("/api/user")]
+        public async Task<ActionResult<ApplicationUserDto>> UpdateUser([FromBody] ApplicationUserDto userDto)
+        {
+            var userEntity = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userDto.UserName);
+            var userOrgReportEntity = await _dbContext.UserOrgReport.FirstOrDefaultAsync(u => u.UserId == userEntity.Id);
+
+            if (userOrgReportEntity != null)
+            {
+                userOrgReportEntity.ReportsToUserId = userDto.ManagerId;
+            } 
+            else
+            {
+                userOrgReportEntity = new UserOrgReport
+                {
+                    ReportsToUserId = userDto.ManagerId,
+                    UserId = userEntity.Id
+                };
+                await _dbContext.AddAsync<UserOrgReport>(userOrgReportEntity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return userDto;
+        }
+
+
         public class ApplicationUserDto
         {
             public string UserName { get; set; }
-            public string Manager { get; set; }
+            public string ManagerId { get; set; }
             public List<string> Roles { get; set; }
         }
     }

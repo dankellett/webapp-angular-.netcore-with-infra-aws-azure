@@ -14,6 +14,7 @@ namespace app_template.Data
         { }
 
         public DbSet<AlignmentEntry> Alignment { get; set; }
+        public DbSet<UserOrgReport> UserOrgReport { get; set; }
 
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)

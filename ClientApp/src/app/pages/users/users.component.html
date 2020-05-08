@@ -16,7 +16,7 @@
       <td>{{user.userName}}</td>
       <td>TBD</td>
       <td>TBD</td>
-      <td><button type="button" class="btn btn-outline-dark" (click)="open(content)">Edit</button></td>
+      <td><button type="button" class="btn btn-outline-dark" (click)="openEditUserModal(content, user)">Edit</button></td>
     </tr>
   </tbody>
 </table>
@@ -35,13 +35,15 @@
           <input id="username" class="form-control" type="text" placeholder="Readonly input here…" readonly>
       </div>
       <div class="form-group">
-        <label for="username">Manager</label>
-          <ng-select></ng-select>
-          <select id="username" class="form-control"></select>
+        <label for="manager">Manager</label>
+          <select name="manager">
+            <option *ngFor="let manager of users" [value]="manager.userId">{{manager.userName}}</option>
+          </select>
+          <!-- <select id="username" class="form-control"></select> -->
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="this.saveUser(); modal.close('Save click')">Save</button>
   </div>
 </ng-template>

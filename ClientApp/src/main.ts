@@ -23,4 +23,5 @@ if (environment.production) {
 platformBrowserDynamic(providers).bootstrapModule(AppModule)
   .catch(err => console.log(err));
 
+// Only needed for Angular Universal Server Side Rendering
 //export { renderModule, renderModuleFactory } from '@angular/platform-server';
