@@ -7,26 +7,21 @@ import { RouterModule } from '@angular/router';
 
 import { CoreModule } from 'src/app/core/core.module'
 import { SharedModule } from 'src/app/shared/shared.module'
+import { PagesModule } from 'src/app/pages/pages.module'
 
 import { AuthorizeGuard } from 'src/app/core/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/app/core/api-authorization/authorize.interceptor';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './shared/components/nav-menu/nav-menu.component';
 import { HomeComponent } from './pages/home/home.component';
-import { CounterComponent } from './pages/counter/counter.component';
 import { FetchDataComponent } from './pages/fetch-data/fetch-data.component';
 import { ChartComponent } from './pages/chart/chart.component';
+import { UsersComponent } from './pages/users/users.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    //NavMenuComponent,
-    //HomeComponent,
-    //CounterComponent,
-    //FetchDataComponent,
-    //ChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,11 +29,13 @@ import { ChartComponent } from './pages/chart/chart.component';
     FormsModule,
     CoreModule,
     SharedModule,
+    PagesModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, canActivate: [AuthorizeGuard]},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'chart', component: ChartComponent, canActivate: [AuthorizeGuard]  },
+      { path: 'users', component: UsersComponent, canActivate: [AuthorizeGuard]  },
     ])
   ],
   providers: [
