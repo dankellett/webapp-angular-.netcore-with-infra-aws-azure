@@ -11,11 +11,11 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
-  location = "West US"
+  location = var.resource_location
 }
 
 resource "azurerm_storage_account" "rg" {
-  name                     = "tempkellett567"
+  name                     = var.storage_account_name
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -23,7 +23,7 @@ resource "azurerm_storage_account" "rg" {
 }
 
 resource "azurerm_sql_server" "rg" {
-  name                         = "kellett-template-sqlserver"
+  name                         = var.database_server_name
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
@@ -43,9 +43,9 @@ resource "azurerm_sql_server" "rg" {
 }
 
 resource "azurerm_sql_database" "rg" {
-  name                = "mysqldatabase"
+  name                = var.database_name
   resource_group_name = azurerm_resource_group.rg.name
-  location            = "West US"
+  location            = azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.rg.name
 
   extended_auditing_policy {

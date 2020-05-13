@@ -2,6 +2,18 @@ variable "resource_group_name" {
   type        = string
   description = "The name of the resorce group for all resources in this project."
 }
+variable "resource_location" {
+  type        = string
+  description = "The Azure region which all resources will be created in."
+}
+variable "database_server_name" {
+  type        = string
+  description = "The idetifier to be given to the Azure SQL Server."
+}
+variable "database_name" {
+  type        = string
+  description = "The idetifier to be given to the Azure SQL database."
+}
 
 variable "database_admin_username" {
   type        = string
@@ -25,7 +37,7 @@ variable "app_service_plan_name" {
 
 variable "storage_account_name" {
   type        = string
-  description = "The name to be used for the Azure App Service. This must be unique to all Azure."
+  description = "The name to be used for the Azure App Service. This must be unique to all Azure and consist of lowercase characters."
 }
 
 variable "auth_cert_password" {
