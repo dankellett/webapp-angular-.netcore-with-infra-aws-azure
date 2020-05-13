@@ -60,6 +60,14 @@ resource "azurerm_sql_database" "rg" {
   }
 }
 
+resource "azurerm_sql_firewall_rule" "rg" {
+  name                = "AllowAllAzureIps"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_sql_server.rg.name
+  start_ip_address    = "0"
+  end_ip_address      = "0"
+}
+
 resource "azurerm_app_service_plan" "rg" {
   name                = var.app_service_plan_name
   location            = azurerm_resource_group.rg.location
@@ -90,7 +98,7 @@ resource "azurerm_app_service" "rg" {
   }
 
   connection_string {
-    name  = "Database"
+    name  = "DefaultConnection"
     type  = "SQLAzure"
     value = "Server=tcp:${azurerm_sql_server.rg.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.rg.name};Persist Security Info=False;User ID=${azurerm_sql_server.rg.administrator_login};Password=${azurerm_sql_server.rg.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   }
