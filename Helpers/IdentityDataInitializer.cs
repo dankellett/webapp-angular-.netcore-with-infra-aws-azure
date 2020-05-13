@@ -19,11 +19,11 @@ namespace app_template
 
         public static void SeedUsers(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
-            var gaUsername = configuration.GetValue<string>("ga_username");
+            var gaUsername = configuration.GetValue<string>("app_global_admin_username");
             if (!String.IsNullOrEmpty(gaUsername)){
                 EnsureUser(userManager,
                     gaUsername,
-                    configuration.GetValue<string>("ga_pw"),
+                    configuration.GetValue<string>("app_global_admin_password"),
                     Constants.Roles.GlobalAdmin);
             }
         }
