@@ -5,6 +5,7 @@ trigger:
   paths:
     exclude:
     - Terraform/*
+    - AzurePipelines/*
 
 pool:
   vmImage: 'windows-latest'
