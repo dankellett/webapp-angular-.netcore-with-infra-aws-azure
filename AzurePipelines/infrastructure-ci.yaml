@@ -6,7 +6,7 @@ trigger:
     include:
     - Terraform/*
 pool:
-  name: Azure Pipelines
+  vmImage: 'windows-latest'
 steps:
 - task: CopyFiles@2
   displayName: 'Copy Terraform Files'
