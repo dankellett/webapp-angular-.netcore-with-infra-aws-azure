@@ -1,6 +1,6 @@
 variable "resource_group_name" {
   type        = string
-  description = "The name of the resorce group for all resources in this project."
+  description = "The name of the resorce group for all resources in this project. "
 }
 variable "resource_location" {
   type        = string
