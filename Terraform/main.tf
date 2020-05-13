@@ -86,6 +86,7 @@ resource "azurerm_app_service" "rg" {
     "app_global_admin_username" = var.app_global_admin_username
     "app_global_admin_password" = var.app_global_admin_password
     "auth_cert_thumbprint" = var.auth_cert_thumbprint
+    "WEBSITE_LOAD_CERTIFICATES" = "*"
   }
 
   connection_string {
