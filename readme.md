@@ -30,5 +30,9 @@ Use this command to extract thumbprint to update the startup.cs
 
 `Get-PfxCertificate -FilePath Certificate.pfx`
 
+#### Azure Pipelines
+
+`-var="app_global_admin_password=$(app_global_admin_password)" -var="app_global_admin_username=$(app_global_admin_username)" -var="app_service_name=$(app_service_name)" -var="app_service_plan_name=$(app_service_plan_name)"  -var="auth_cert_filepath=$(auth_cert_filepath)" -var="auth_cert_password=$(auth_cert_password)" -var="auth_cert_thumbprint=$(auth_cert_thumbprint)" -var="database_admin_password=$(database_admin_password)" -var="database_admin_username=$(database_admin_username)" -var="database_name=$(database_name)" -var="database_server_name=$(database_server_name)" -var="resource_group_name=$(resource_group_name)" -var="resource_location=$(resource_location)" -var="storage_account_name=$(storage_account_name)"`
+
 
 
