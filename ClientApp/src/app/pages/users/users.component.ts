@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
   public users: UserDto[];
   private userDataService: UserdataService;
   private modalUserObject: UserDto;
+  public selectedManagerId: string;
 
   constructor(private modalService: NgbModal, private _userDataService: UserdataService) {
     this.userDataService = _userDataService;
