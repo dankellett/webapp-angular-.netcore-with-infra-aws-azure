@@ -37,10 +37,10 @@ variable beanstalk_solution_stack_name {
 variable database_name {
   type = string
 }
-variable database_user {
+variable database_admin_username {
   type = string
 }
-variable database_password {
+variable database_admin_password {
   type = string
 }
 variable database_port {

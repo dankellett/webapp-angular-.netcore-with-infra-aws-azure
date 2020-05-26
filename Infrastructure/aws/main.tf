@@ -35,8 +35,8 @@ module "db" {
   allocated_storage = var.database_allocated_storage
 
   name     = var.database_name
-  username = var.database_user
-  password = var.database_password
+  username = var.database_admin_username
+  password = var.database_admin_password
   port     = var.database_port
 
   #iam_database_authentication_enabled = true
