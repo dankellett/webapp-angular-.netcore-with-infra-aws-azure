@@ -173,10 +173,13 @@ module "elastic_beanstalk_environment" {
   solution_stack_name = var.beanstalk_solution_stack_name
 
   additional_settings = [
-    { namespace = "aws:rds:dbinstance",name = "DBEngine", value = "sqlserver-web" },
-    { namespace = "aws:rds:dbinstance",name = "DBInstanceClass", value = "db.t2.micro" },
-    { namespace = "aws:rds:dbinstance",name = "DBUser", value = "dkellett" },
-    { namespace = "aws:rds:dbinstance",name = "DBPassword", value = "kaskaD1e-0" },
-    { namespace = "aws:rds:dbinstance",name = "MultiAZDatabase", value = "false" }
+    { namespace = "aws:elasticbeanstalk:application:environment", name = "auth_cert_thumbprint", value = var.auth_cert_thumbprint },
+    { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_username", value = var.app_global_admin_username },
+    { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_password", value = var.app_global_admin_password },
+    # { namespace = "aws:rds:dbinstance",name = "DBEngine", value = "sqlserver-web" },
+    # { namespace = "aws:rds:dbinstance",name = "DBInstanceClass", value = "db.t2.micro" },
+    # { namespace = "aws:rds:dbinstance",name = "DBUser", value = "dkellett" },
+    # { namespace = "aws:rds:dbinstance",name = "DBPassword", value = "kaskaD1e-0" },
+    # { namespace = "aws:rds:dbinstance",name = "MultiAZDatabase", value = "false" }
   ]
 }
