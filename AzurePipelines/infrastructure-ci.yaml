@@ -1,10 +1,10 @@
-trigger:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - Terraform/*
+# trigger:
+#   branches:
+#     include:
+#     - master
+#   paths:
+#     include:
+#     - Terraform/*
 pool:
   vmImage: 'windows-latest'
 steps:
