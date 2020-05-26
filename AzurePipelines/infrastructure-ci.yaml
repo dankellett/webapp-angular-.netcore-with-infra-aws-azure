@@ -11,8 +11,8 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Terraform Files'
   inputs:
-    SourceFolder: Terraform
-    TargetFolder: ' $(build.artifactstagingdirectory)/Terraform'
+    SourceFolder: Infrastructure
+    TargetFolder: ' $(build.artifactstagingdirectory)/Infrastructure'
 
 - task: CopyFiles@2
   displayName: 'Copy Auth Cert File'
