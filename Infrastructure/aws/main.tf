@@ -34,7 +34,7 @@ module "db" {
   instance_class    = var.database_instance_class
   allocated_storage = var.database_allocated_storage
 
-  name     = var.database_name
+  name     = "" #must be empty for sqlserver
   username = var.database_admin_username
   password = var.database_admin_password
   port     = var.database_port
