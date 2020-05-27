@@ -147,25 +147,27 @@ module "elastic_beanstalk_application" {
 }
 
 module "elastic_beanstalk_environment" {
-  source                     = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment.git?ref=tags/0.19.0"
-  namespace                  = var.global_namespace
-  stage                      = var.global_stage
-  name                       = var.global_name
-  description                = "Template Application Environment Description"
-  region                     = var.global_region
-  autoscale_min              = 1
-  autoscale_max              = 1
-  instance_type              = "t2.micro"
-  availability_zone_selector = "Any"
-  updating_min_in_service    = 0
-  updating_max_batch         = 1
-  root_volume_size           = 30
+  source                      = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment.git?ref=tags/0.19.0"
+  namespace                   = var.global_namespace
+  stage                       = var.global_stage
+  name                        = var.global_name
+  description                 = "Template Application Environment Description"
+  region                      = var.global_region
+  autoscale_min               = 1
+  autoscale_max               = 1
+  instance_type               = "t2.micro"
+  availability_zone_selector  = "Any"
+  updating_min_in_service     = 0
+  updating_max_batch          = 1
+  root_volume_size            = 30
+  associate_public_ip_address = true
+
 
   elastic_beanstalk_application_name = module.elastic_beanstalk_application.elastic_beanstalk_application_name
 
   vpc_id                  = module.vpc.vpc_id
   loadbalancer_subnets    = module.subnets.public_subnet_ids
-  application_subnets     = module.subnets.private_subnet_ids
+  application_subnets     = module.subnets.public_subnet_ids
   allowed_security_groups = [module.vpc.vpc_default_security_group_id]
 
   // https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html
