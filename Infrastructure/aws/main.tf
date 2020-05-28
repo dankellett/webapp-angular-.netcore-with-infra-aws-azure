@@ -141,6 +141,7 @@ module "elastic_beanstalk_environment" {
 
   additional_settings = [
     { namespace = "aws:elasticbeanstalk:application:environment", name = "auth_cert_thumbprint", value = var.auth_cert_thumbprint },
+    { namespace = "aws:elasticbeanstalk:application:environment", name = "auth_cert_password", value = var.auth_cert_password },
     { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_username", value = var.app_global_admin_username },
     { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_password", value = var.app_global_admin_password },
   ]

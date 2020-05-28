@@ -146,22 +146,25 @@ namespace app_template
                 }
             }
 
-            using (X509Store certStore = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-            {
-                certStore.Open(OpenFlags.ReadOnly);
-                X509Certificate2Collection certCollection = certStore.Certificates.Find(
-                    X509FindType.FindByThumbprint,
-                    Configuration.GetValue<string>("auth_cert_thumbprint"),
-                    false);
-                // Get the first cert with the thumbprint
-                if (certCollection.Count > 0)
+            //Try LocalMachine location
+            if (cert == null) {
+                using (X509Store certStore = new X509Store(StoreName.My, StoreLocation.LocalMachine))
                 {
-                    cert = certCollection[0];
-                    //_startupLogger?.Log($"Successfully loaded cert from registry: {cert.Thumbprint}");
+                    certStore.Open(OpenFlags.ReadOnly);
+                    X509Certificate2Collection certCollection = certStore.Certificates.Find(
+                        X509FindType.FindByThumbprint,
+                        Configuration.GetValue<string>("auth_cert_thumbprint"),
+                        false);
+                    // Get the first cert with the thumbprint
+                    if (certCollection.Count > 0)
+                    {
+                        cert = certCollection[0];
+                        //_startupLogger?.Log($"Successfully loaded cert from registry: {cert.Thumbprint}");
+                    }
                 }
             }
 
-            // Fallback to local file for development
+            // Fallback to local file
             if (cert == null)
             {
                 cert = new X509Certificate2(Path.Combine(env.ContentRootPath, "auth_key_dev.pfx"), Configuration.GetValue<string>("auth_cert_password"));
