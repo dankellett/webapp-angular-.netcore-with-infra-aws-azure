@@ -146,6 +146,21 @@ namespace app_template
                 }
             }
 
+            using (X509Store certStore = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+            {
+                certStore.Open(OpenFlags.ReadOnly);
+                X509Certificate2Collection certCollection = certStore.Certificates.Find(
+                    X509FindType.FindByThumbprint,
+                    Configuration.GetValue<string>("auth_cert_thumbprint"),
+                    false);
+                // Get the first cert with the thumbprint
+                if (certCollection.Count > 0)
+                {
+                    cert = certCollection[0];
+                    //_startupLogger?.Log($"Successfully loaded cert from registry: {cert.Thumbprint}");
+                }
+            }
+
             // Fallback to local file for development
             if (cert == null)
             {

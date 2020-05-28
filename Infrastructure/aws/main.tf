@@ -101,43 +101,6 @@ module "db" {
   # ]
 }
 
-# module "rds_instance" {
-#   source              = "git::https://github.com/cloudposse/terraform-aws-rds.git?ref=tags/0.9.4"
-#   namespace           = var.global_namespace
-#   stage               = var.global_stage
-#   name                = var.global_name
-#   database_name       = var.database_name
-#   database_user       = var.database_user
-#   database_password   = var.database_password
-#   allocated_storage   = var.database_allocated_storage
-#   database_port       = var.database_port
-#   db_parameter_group  = var.database_parameter_group
-#   engine              = var.database_engine
-#   engine_version      = var.database_engine_version
-#   multi_az            = false
-#   storage_type        = "standard"
-#   instance_class      = var.database_instance_class
-#   storage_encrypted   = false
-#   publicly_accessible = false
-#   vpc_id              = module.vpc.vpc_id
-#   subnet_ids          = module.subnets.private_subnet_ids
-#   security_group_ids  = [module.vpc.vpc_default_security_group_id]
-#   apply_immediately   = true
-
-#   # db_parameter = [
-#   #   {
-#   #     name         = "myisam_sort_buffer_size"
-#   #     value        = "1048576"
-#   #     apply_method = "immediate"
-#   #   },
-#   #   {
-#   #     name         = "sort_buffer_size"
-#   #     value        = "2097152"
-#   #     apply_method = "immediate"
-#   #   }
-#   # ]
-# }
-
 module "elastic_beanstalk_application" {
   source      = "git::https://github.com/cloudposse/terraform-aws-elastic-beanstalk-application.git?ref=tags/0.5.0"
   namespace   = var.global_namespace
@@ -178,10 +141,5 @@ module "elastic_beanstalk_environment" {
     { namespace = "aws:elasticbeanstalk:application:environment", name = "auth_cert_thumbprint", value = var.auth_cert_thumbprint },
     { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_username", value = var.app_global_admin_username },
     { namespace = "aws:elasticbeanstalk:application:environment", name = "app_global_admin_password", value = var.app_global_admin_password },
-    # { namespace = "aws:rds:dbinstance",name = "DBEngine", value = "sqlserver-web" },
-    # { namespace = "aws:rds:dbinstance",name = "DBInstanceClass", value = "db.t2.micro" },
-    # { namespace = "aws:rds:dbinstance",name = "DBUser", value = "dkellett" },
-    # { namespace = "aws:rds:dbinstance",name = "DBPassword", value = "kaskaD1e-0" },
-    # { namespace = "aws:rds:dbinstance",name = "MultiAZDatabase", value = "false" }
   ]
 }
