@@ -1,6 +1,6 @@
 global_region       = "us-west-2"
-global_namespace    = "template_namespace"
-global_name         = "template_app"
+global_namespace    = "ns"
+global_name         = "app"
 global_stage        = "dev"
 
 vpc_name = "template_vpc"
