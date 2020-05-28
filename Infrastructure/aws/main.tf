@@ -59,7 +59,8 @@ module "db" {
 
   # DB subnet group
   #subnet_ids = module.subnets.private_subnet_ids
-  subnet_ids = module.subnets.public_subnet_ids
+  subnet_ids          = module.subnets.public_subnet_ids
+  publicly_accessible = true
 
   # DB parameter group
   family = "sqlserver-web-14.0"
