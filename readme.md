@@ -36,10 +36,20 @@ Use this command to extract thumbprint to update the startup.cs
 
 #### TODO writeups
 
+AWS Beanstalk
+
+AWS Database setup
+need to create db manually "demodb"
+
+AWS local cert
+This needs to be run on the web servers. A keypair needs to be assigned to the eb instances via config->security to enable a RDP user/password to be generated and provide a remote login.
+`Import-Module WebAdministration`
+`Set-ItemProperty "IIS:\AppPools\DefaultAppPool" -Name "processModel.loadUserProfile" -Value "True"`
+This should be moved to a provisioner to remote-exec on each ec2 instance.
+
 Installing certs on Azure App Service is easier than AWS. App Service provides a UI to install and manage certs, Beanstalk doesn't. In BS you must install the cert on each instance - how do you do this at scale? For now I have reverted back to a dev cert that is included with the code files.
 
 This is the format required to load cert file for IS4 in appsettings.
-
 `"Key": {
       		"Type": "File",
       		"FilePath": ".\\auth_cert_dev.pfx",
@@ -50,10 +60,10 @@ This is the format required to load cert file for IS4 in appsettings.
 Certs in the cert store on aws/beanstalk:
 If you aren't using the local pfx and want to use the windows cert store you will need to install the cert and grant permissions to IIS_IUSRS.
 
-`Set-ItemProperty "IIS:\AppPools\DefaultAppPool" -Name "processModel.loadUserProfile" -Value "True"`
+This is a script that can install the certs
 `$mypwd = Get-Credential -UserName 'Enter password below' -Message 'Enter password below'
 Import-PfxCertificate -FilePath "C:\inetpub\AspNetCoreWebApps\app\auth_key_dev.pfx" -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd.Password`
 
-There is a script in util that can be run to grant permissions. Usage example:
+There is a script in util that can be run to grant permissions to the cert. Usage example:
 .\addusertocert.ps1 -userName 'IIS_IUSRS' -permission read -certStoreLocation \LocalMachine\My -certThumbprint 5F5B30EE4917330E7D98A1B01E5060C8317AA5C5
 

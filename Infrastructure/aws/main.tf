@@ -29,11 +29,11 @@ resource "aws_security_group" "allow_sqlserver_port" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "SQLServer from VPC"
+    description = "SQLServer"
     from_port   = var.database_port
     to_port     = var.database_port
     protocol    = "tcp"
-    cidr_blocks = [module.vpc.vpc_cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -45,6 +45,64 @@ resource "aws_security_group" "allow_sqlserver_port" {
 
   tags = {
     Name = "allow_sqlServer"
+  }
+}
+
+resource "aws_security_group" "allow_rdp" {
+  name        = "allow_rdp"
+  description = "Allow RDP connections"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "RDP"
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_rdp"
+  }
+}
+
+resource "aws_security_group" "allow_ssh_winrm" {
+  name        = "allow_ssh_winrm"
+  description = "Allow SSH and WinRM connections"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "WinRM"
+    from_port   = 5985
+    to_port     = 5986
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_rdp"
   }
 }
 
@@ -158,7 +216,7 @@ module "elastic_beanstalk_environment" {
   vpc_id                  = module.vpc.vpc_id
   loadbalancer_subnets    = module.subnets.public_subnet_ids
   application_subnets     = module.subnets.public_subnet_ids
-  allowed_security_groups = [module.vpc.vpc_default_security_group_id]
+  allowed_security_groups = [module.vpc.vpc_default_security_group_id,aws_security_group.allow_rdp,aws_security_group.allow_ssh_winrm]
 
   // https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html
   // https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html#platforms-supported.docker
