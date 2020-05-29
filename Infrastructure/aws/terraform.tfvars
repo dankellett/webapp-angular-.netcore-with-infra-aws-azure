@@ -9,7 +9,6 @@ vpc_cidr = "10.0.0.0/16"
 vpc_subnet_availability_zones = ["us-west-2a", "us-west-2b"]
 
 database_admin_username = "dkellett"
-database_admin_password = "kaskaD3-"
 database_port = 1433
 database_engine = "sqlserver-web"
 database_engine_version = "14.00.3281.6.v1"
