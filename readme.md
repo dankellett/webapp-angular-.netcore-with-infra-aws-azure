@@ -38,6 +38,9 @@ Use this command to extract thumbprint to update the startup.cs
 
 AWS Beanstalk
 
+AWS Storage setup
+A bucket is needed to store Teraform remote state
+
 AWS Database setup
 need to create db manually "demodb"
 
